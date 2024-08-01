@@ -30,7 +30,7 @@ export const TileCol = styled.div<TileCol>`
 `;
 
 export type BoardTile = {
-  color?: string;
+  occupiedColor: string | null;
 };
 
 export type Tiles = {
@@ -50,7 +50,7 @@ export function Tiles(props: Tiles) {
             <TileCol
               key={colIdx}
               width={width / row.length}
-              color={col.color}
+              color={col.occupiedColor ?? ""}
             />
           ))}
         </TileRow>
