@@ -19,7 +19,7 @@ export const TileRow = styled.div<TileRow>`
   }
 `;
 
-export type TileCol = BoardTile & Pick<Tiles, "width">;
+export type TileCol = Pick<Tiles, "width">;
 
 export const TileCol = styled.div<TileCol>`
   width: ${(props) => props.width}px;
