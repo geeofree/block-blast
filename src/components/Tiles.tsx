@@ -47,9 +47,11 @@ export function Tiles(props: Tiles) {
       {board.map((row, rowIdx) => (
         <TileRow key={rowIdx} height={height / board.length}>
           {row.map((col, colIdx) => (
-            <TileCol key={colIdx} width={width / row.length} color={col.color}>
-              [{rowIdx}:{colIdx}]
-            </TileCol>
+            <TileCol
+              key={colIdx}
+              width={width / row.length}
+              color={col.color}
+            />
           ))}
         </TileRow>
       ))}
