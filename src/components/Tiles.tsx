@@ -19,7 +19,7 @@ export const TileRow = styled.div<TileRow>`
   }
 `;
 
-export type TileCol = BoardCol & Pick<Tiles, "width">;
+export type TileCol = BoardTile & Pick<Tiles, "width">;
 
 export const TileCol = styled.div<TileCol>`
   width: ${(props) => props.width}px;
@@ -29,14 +29,14 @@ export const TileCol = styled.div<TileCol>`
   }
 `;
 
-export type BoardCol = {
+export type BoardTile = {
   color?: string;
 };
 
 export type Tiles = {
   width: number;
   height: number;
-  board: BoardCol[][];
+  board: BoardTile[][];
 };
 
 export function Tiles(props: Tiles) {
