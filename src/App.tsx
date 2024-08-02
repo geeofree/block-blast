@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Tiles } from "./components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const AppContainer = styled.div`
   height: 100vh;
@@ -12,6 +12,36 @@ const AppContainer = styled.div`
 const COLORS = ["violet", "orange", "tomato", "cyan"];
 
 const getRandomNum = (n: number) => Math.floor(Math.random() * n);
+
+/* function getClearableLines(board: Tiles["board"]): { */
+/*   horizontal: Set<number>; */
+/*   vertical: Set<number>; */
+/* } { */
+/*   const horizontal = new Set<number>(); */
+/*   const vertical = new Set<number>(); */
+/*   for (let y = 0; y < board.length; y++) { */
+/*     let isVerticalClearable = true; */
+/*     let isHorizontalClearable = true; */
+/*     for (let x = 0; x < board[y].length; x++) { */
+/*       if (board[x][y].occupiedColor === null) { */
+/*         isVerticalClearable = false; */
+/*       } */
+/**/
+/*       if (isVerticalClearable && x + 1 === board[y].length) { */
+/*         vertical.add(y); */
+/*       } */
+/**/
+/*       if (board[y][x].occupiedColor === null) { */
+/*         isHorizontalClearable = false; */
+/*       } */
+/**/
+/*       if (isHorizontalClearable && x + 1 === board[y].length) { */
+/*         horizontal.add(y); */
+/*       } */
+/*     } */
+/*   } */
+/*   return { horizontal, vertical }; */
+/* } */
 
 export function App() {
   const [boardState, setBoardState] = useState<Tiles["board"]>([
@@ -98,18 +128,16 @@ export function App() {
   ]);
 
   const sample = [
-    [0, 1, 2, 9],
-    [3, 4, 5, 12],
+    [0, 1, 8, 9],
+    [2, 3, 10, 11],
+    [4, 5, 12, 13],
     [6, 7, 14, 15],
+    [17, 18, 25, 26],
+    [33, 34, 41, 42],
+    [49, 50, 57, 58],
   ];
 
   const [idx, setIdx] = useState(0);
-
-  useEffect(() => {
-    // TODO: Update the board when we clear a line.
-    // TODO: Figure out which data structure to use for line clearing.
-    console.log(boardState);
-  }, [idx]);
 
   return (
     <AppContainer
