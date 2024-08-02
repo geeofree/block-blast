@@ -1,1 +1,1 @@
-export { Tiles } from "./Tiles";
+export { Board } from "./Board";

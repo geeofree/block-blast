@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Tiles } from "./components";
+import { Board } from "./components";
 import { useState } from "react";
 
 const AppContainer = styled.div`
@@ -44,7 +44,7 @@ const getRandomNum = (n: number) => Math.floor(Math.random() * n);
 /* } */
 
 export function App() {
-  const [boardState, setBoardState] = useState<Tiles["board"]>([
+  const [boardState, setBoardState] = useState<Board["board"]>([
     [
       { occupiedColor: null },
       { occupiedColor: null },
@@ -157,7 +157,7 @@ export function App() {
         setIdx((idx) => (idx + 1 < sample.length ? idx + 1 : 0));
       }}
     >
-      <Tiles width={512} height={512} board={boardState} />
+      <Board width={512} height={512} board={boardState} />
     </AppContainer>
   );
 }

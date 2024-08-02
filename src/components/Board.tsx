@@ -1,16 +1,16 @@
 import styled from "styled-components";
 
-export type TileContainer = Pick<Tiles, "width" | "height">;
+export type BoardContainer = Pick<Board, "width" | "height">;
 
-export const TileContainer = styled.section<TileContainer>`
+export const BoardContainer = styled.section<BoardContainer>`
   border: 1px solid;
   max-width: ${(props) => props.width}px;
   height: ${(props) => props.height}px;
 `;
 
-export type TileRow = Pick<Tiles, "height">;
+export type BoardRow = Pick<Board, "height">;
 
-export const TileRow = styled.div<TileRow>`
+export const BoardRow = styled.div<BoardRow>`
   display: flex;
   width: 100%;
   height: ${(props) => props.height}px;
@@ -19,9 +19,9 @@ export const TileRow = styled.div<TileRow>`
   }
 `;
 
-export type TileCol = Pick<Tiles, "width">;
+export type BoardCol = Pick<Board, "width">;
 
-export const TileCol = styled.div<TileCol>`
+export const BoardCol = styled.div<BoardCol>`
   width: ${(props) => props.width}px;
   background-color: ${(props) => props.color};
   &:not(:last-child) {
@@ -33,28 +33,28 @@ export type BoardTile = {
   occupiedColor: string | null;
 };
 
-export type Tiles = {
+export type Board = {
   width: number;
   height: number;
   board: BoardTile[][];
 };
 
-export function Tiles(props: Tiles) {
+export function Board(props: Board) {
   const { width, height, board } = props;
 
   return (
-    <TileContainer width={width} height={height}>
+    <BoardContainer width={width} height={height}>
       {board.map((row, rowIdx) => (
-        <TileRow key={rowIdx} height={height / board.length}>
+        <BoardRow key={rowIdx} height={height / board.length}>
           {row.map((col, colIdx) => (
-            <TileCol
+            <BoardCol
               key={colIdx}
               width={width / row.length}
               color={col.occupiedColor ?? ""}
             />
           ))}
-        </TileRow>
+        </BoardRow>
       ))}
-    </TileContainer>
+    </BoardContainer>
   );
 }
