@@ -22,8 +22,6 @@ export class Flex extends Entity {
         const x = (GameConfig.getBlockCols() * GameConfig.getBlockTileSize() * col) + (col === 0 ? 0 : this.gap);
         const y = (GameConfig.getBlockRows() * GameConfig.getBlockTileSize() * row) + (row === 0 ? 0 : this.gap);
 
-        console.log({ col, row, x , y});
-
         entity.setPosition(x, y);
         this.attachChild(entity.container);
     });

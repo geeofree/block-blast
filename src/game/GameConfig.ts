@@ -6,7 +6,7 @@ class GameConfigSingleton {
 
 
   private constructor() {
-    this.blockTileSize = 16;
+    this.blockTileSize = 24;
     this.blockRows = 3;
     this.blockCols = 3;
   }
