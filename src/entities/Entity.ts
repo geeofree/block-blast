@@ -10,9 +10,6 @@ export abstract class Entity {
   constructor() {
     this.container = new Container();
     this.isDragging = false;
-    setTimeout(() => {
-      this.render();
-    });
   }
 
   getSize() {

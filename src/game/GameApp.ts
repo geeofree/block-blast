@@ -48,13 +48,11 @@ export class GameApp {
       ]),
     ];
 
-    const centerContainer = new Flex(3, blocks);
-    centerContainer.attachTo(this.app.stage);
-    centerContainer.setPosition((this.app.canvas.width / 2) - centerContainer.getSize().width, (this.app.canvas.height / 2) - centerContainer.getSize().height);
-
     let originalPosition = { x: 0, y: 0 };
 
     blocks.forEach((block) => {
+      block.render();
+
       block.onDrag((dragType, event) => {
         switch (dragType) {
           case 'drag-start': {
@@ -75,5 +73,12 @@ export class GameApp {
         }
       });
     });
+
+    const centerContainer = new Flex(3, blocks);
+    centerContainer.render();
+    const centerContainerSize = centerContainer.getSize()
+    centerContainer.container.pivot.set(centerContainerSize.width / 2, centerContainerSize.height / 2);
+    centerContainer.setPosition((this.app.canvas.width / 2), this.app.canvas.height - centerContainerSize.height - 50);
+    centerContainer.attachTo(this.app.stage);
   }
 }
