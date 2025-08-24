@@ -1,3 +1,4 @@
+import { GameConfig } from "../game/GameConfig";
 import { Entity } from "./Entity";
 
 export class Flex extends Entity {
@@ -13,42 +14,17 @@ export class Flex extends Entity {
   }
 
   render(): void {
-    let largestY = 0;
-    let x = 0;
-    let y = 0;
-    let prevRow = 0;
-
     this.entities
-      .map((entity, index) => {
-        const { height } = entity.getSize();
+      .forEach((entity, index) => {
+        const col = index % this.maxItemsPerRow;
         const row = Math.floor(index / this.maxItemsPerRow);
-        const col = index % this.maxItemsPerRow;
 
-        largestY = Math.max(largestY, height);
+        const x = (GameConfig.getBlockCols() * GameConfig.getBlockTileSize() * col) + (col === 0 ? 0 : this.gap);
+        const y = (GameConfig.getBlockRows() * GameConfig.getBlockTileSize() * row) + (row === 0 ? 0 : this.gap);
 
-        if (row != prevRow) {
-          y = this.gap + largestY
-
-          if (col === 0) {
-            largestY = y + largestY;
-          }
-
-          prevRow = row;
-        }
-
-        return { entity, y }
-      })
-      .forEach((item, index) => {
-        const { entity, y } = item;
-        const { width } = entity.getSize();
-        const col = index % this.maxItemsPerRow;
-
-        if (col === 0) {
-          x = 0;
-        }
+        console.log({ col, row, x , y});
 
         entity.setPosition(x, y);
-        x = x + this.gap + width;
         this.attachChild(entity.container);
     });
   }

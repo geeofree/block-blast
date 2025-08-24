@@ -36,7 +36,7 @@ export abstract class Entity {
     this.container.on('pointerdown', event => {
       if (!this.isDragging) {
         this.isDragging = true;
-        this.container.pivot.set(this.container.width / 2, this.container.height - GameConfig.getBlockSize() / 2);
+        this.container.pivot.set(this.container.width / 2, this.container.height - GameConfig.getBlockTileSize() / 2);
         this.container.cursor = 'grabbing';
         callback('drag-start', event);
       }

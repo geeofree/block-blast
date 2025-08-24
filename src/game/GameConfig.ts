@@ -1,9 +1,14 @@
 class GameConfigSingleton {
   private static instance: GameConfigSingleton;
-  private blockSize: number;
+  private blockTileSize: number;
+  private blockRows: number;
+  private blockCols: number;
+
 
   private constructor() {
-    this.blockSize = 16;
+    this.blockTileSize = 16;
+    this.blockRows = 3;
+    this.blockCols = 3;
   }
 
   public static getInstance() {
@@ -14,12 +19,28 @@ class GameConfigSingleton {
     return GameConfigSingleton.instance;
   }
 
-  public getBlockSize(): number {
-    return this.blockSize;
+  public getBlockTileSize(): number {
+    return this.blockTileSize;
   }
 
-  public setBlockSize(blockSize: number) {
-    GameConfigSingleton.instance.blockSize = blockSize;
+  public setBlockTileSize(blockSize: number) {
+    GameConfigSingleton.instance.blockTileSize = blockSize;
+  }
+
+  public getBlockRows(): number {
+    return this.blockRows;
+  }
+
+  public setBlockRows(blockRows: number) {
+    GameConfigSingleton.instance.blockRows = blockRows;
+  }
+
+  public getBlockCols(): number {
+    return this.blockCols;
+  }
+
+  public setBlockCols(blockCols: number) {
+    GameConfigSingleton.instance.blockCols = blockCols;
   }
 }
 

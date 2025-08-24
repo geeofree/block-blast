@@ -21,10 +21,10 @@ export class Block extends Entity {
     this.data.forEach((shouldRender, index) => {
       if (!shouldRender) return;
       const blockGraphic = new Graphics();
-      const x = (index % 3) * GameConfig.getBlockSize();
-      const y = Math.floor(index / 3) * GameConfig.getBlockSize();
+      const x = (index % 3) * GameConfig.getBlockTileSize();
+      const y = Math.floor(index / 3) * GameConfig.getBlockTileSize();
       blockGraphic
-        .rect(x, y, GameConfig.getBlockSize(), GameConfig.getBlockSize())
+        .rect(x, y, GameConfig.getBlockTileSize(), GameConfig.getBlockTileSize())
         .fill('red')
       this.attachChild(blockGraphic);
     })

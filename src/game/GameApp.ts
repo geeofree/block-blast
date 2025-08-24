@@ -41,6 +41,11 @@ export class GameApp {
         0, 1, 0,
         1, 1, 1,
       ]),
+      new Block([
+        0, 0, 0,
+        1, 1, 0,
+        1, 1, 0,
+      ]),
     ];
 
     const centerContainer = new Flex(3, blocks);
