@@ -10,7 +10,7 @@ type BlockData = [
   Binary, Binary, Binary,
 ]
 
-const BLOCK_COLORS = ['red', 'blue', 'green', 'yellow', 'orange'];
+const BLOCK_COLORS = ['#ef4444', '#10b981', '#3b82f6', '#6366f1', '#d946ef', '#f43f5e'];
 
 export class Block extends Entity {
   private data: BlockData;
