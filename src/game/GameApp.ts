@@ -1,6 +1,8 @@
 import { Application } from 'pixi.js';
 import { Block } from '../entities/Block';
 import { Flex } from '../entities/Flex';
+import { GameConfig } from './GameConfig';
+import { Board } from '../entities/Board';
 
 export class GameApp {
   private app: Application;
@@ -19,6 +21,10 @@ export class GameApp {
     this.app.canvas.id = 'game-canvas';
 
     document.body.appendChild(this.app.canvas);
+
+    this.app.stage.sortableChildren = true;
+
+    GameConfig.setBlockTileSize((this.app.canvas.width / 3) / GameConfig.getBlockTileSize());
 
     const blocks: Block[] = [
       new Block([
@@ -57,6 +63,7 @@ export class GameApp {
         switch (dragType) {
           case 'drag-start': {
             originalPosition = { x: event.currentTarget.x, y: event.currentTarget.y };
+            event.currentTarget.zIndex = 999;
             event.currentTarget.parent!.toLocal(event.global, undefined, event.currentTarget.position);
             break;
           }
@@ -74,7 +81,20 @@ export class GameApp {
       });
     });
 
-    const centerContainer = new Flex(3, blocks);
+    const board = new Board(GameConfig.getBoardLayout());
+    board.render();
+    const boardSize = board.getSize()
+    board.container.pivot.set(boardSize.width / 2, boardSize.height / 2);
+    board.setPosition((this.app.canvas.width / 2), boardSize.height + 50);
+    board.attachTo(this.app.stage);
+
+    const centerContainer = new Flex({
+      maxItemsPerRow: 2,
+      entities: blocks,
+      width: GameConfig.getBlockLayout().col * GameConfig.getBlockTileSize(),
+      height: GameConfig.getBlockLayout().row * GameConfig.getBlockTileSize(),
+    });
+
     centerContainer.render();
     const centerContainerSize = centerContainer.getSize()
     centerContainer.container.pivot.set(centerContainerSize.width / 2, centerContainerSize.height / 2);

@@ -1,16 +1,27 @@
-import { GameConfig } from "../game/GameConfig";
 import { Entity } from "./Entity";
+
+type FlexConfig = {
+  maxItemsPerRow: number;
+  gap?: number;
+  entities: Entity[];
+  width: number;
+  height: number;
+}
 
 export class Flex extends Entity {
   private entities: Entity[];
   private maxItemsPerRow: number;
   private gap: number;
+  private width: number;
+  private height: number;
 
-  constructor(maxItemsPerRow: number, entities: Entity[]) {
+  constructor(config: FlexConfig) {
     super();
-    this.maxItemsPerRow = maxItemsPerRow;
-    this.gap = 10;
-    this.entities = entities;
+    this.maxItemsPerRow = config.maxItemsPerRow;
+    this.gap = config.gap ?? 16;
+    this.entities = config.entities;
+    this.width = config.width;
+    this.height = config.height;
   }
 
   render(): void {
@@ -19,8 +30,8 @@ export class Flex extends Entity {
         const col = index % this.maxItemsPerRow;
         const row = Math.floor(index / this.maxItemsPerRow);
 
-        const x = (GameConfig.getBlockCols() * GameConfig.getBlockTileSize() * col) + (col === 0 ? 0 : this.gap);
-        const y = (GameConfig.getBlockRows() * GameConfig.getBlockTileSize() * row) + (row === 0 ? 0 : this.gap);
+        const x = (this.width * col) + (col === 0 ? 0 : this.gap);
+        const y = (this.height * row) + (row === 0 ? 0 : this.gap);
 
         entity.setPosition(x, y);
         this.attachChild(entity.container);

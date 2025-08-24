@@ -1,14 +1,16 @@
+import type { Layout } from "../types";
+
 class GameConfigSingleton {
   private static instance: GameConfigSingleton;
   private blockTileSize: number;
-  private blockRows: number;
-  private blockCols: number;
+  private boardLayout: Layout;
+  private blockLayout: Layout;
 
 
   private constructor() {
     this.blockTileSize = 24;
-    this.blockRows = 3;
-    this.blockCols = 3;
+    this.boardLayout = { row: 8, col: 8 }
+    this.blockLayout = { row: 3, col: 3 }
   }
 
   public static getInstance() {
@@ -24,23 +26,23 @@ class GameConfigSingleton {
   }
 
   public setBlockTileSize(blockSize: number) {
-    GameConfigSingleton.instance.blockTileSize = blockSize;
+    this.blockTileSize = blockSize;
   }
 
-  public getBlockRows(): number {
-    return this.blockRows;
+  public getBoardLayout(): Layout {
+    return this.boardLayout;
   }
 
-  public setBlockRows(blockRows: number) {
-    GameConfigSingleton.instance.blockRows = blockRows;
+  public setBoardLayout(layout: Layout) {
+    this.boardLayout = layout;
   }
 
-  public getBlockCols(): number {
-    return this.blockCols;
+  public getBlockLayout(): Layout {
+    return this.blockLayout;
   }
 
-  public setBlockCols(blockCols: number) {
-    GameConfigSingleton.instance.blockCols = blockCols;
+  public setBlockLayout(layout: Layout) {
+    this.blockLayout = layout;
   }
 }
 

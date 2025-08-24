@@ -4,19 +4,13 @@ import type { Binary } from "../types";
 import { Entity } from "./Entity";
 import { getRandomItem } from "../utils";
 
-type BlockData = [
-  Binary, Binary, Binary,
-  Binary, Binary, Binary,
-  Binary, Binary, Binary,
-]
-
 const BLOCK_COLORS = ['#ef4444', '#10b981', '#3b82f6', '#6366f1', '#d946ef', '#f43f5e'];
 
 export class Block extends Entity {
-  private data: BlockData;
+  private data: Binary[];
   private tileColor: string;
 
-  constructor(data: BlockData) {
+  constructor(data: Binary[]) {
     super();
     this.data = data;
     this.tileColor = getRandomItem(BLOCK_COLORS);
@@ -34,8 +28,9 @@ export class Block extends Entity {
     this.data.forEach((shouldRender, index) => {
       if (!shouldRender) return;
       const blockGraphic = new Graphics();
-      const x = (index % 3) * GameConfig.getBlockTileSize();
-      const y = Math.floor(index / 3) * GameConfig.getBlockTileSize();
+      const blockLayout = GameConfig.getBlockLayout();
+      const x = (index % blockLayout.col) * GameConfig.getBlockTileSize();
+      const y = Math.floor(index / blockLayout.row) * GameConfig.getBlockTileSize();
       blockGraphic
         .rect(x, y, GameConfig.getBlockTileSize(), GameConfig.getBlockTileSize())
         .fill(this.tileColor)
