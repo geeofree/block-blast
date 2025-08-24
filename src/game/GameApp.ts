@@ -44,7 +44,31 @@ export class GameApp {
     ];
 
     const centerContainer = new Flex(3, blocks);
-    centerContainer.setPosition(this.app.canvas.width / 2, this.app.canvas.height / 2);
     centerContainer.attachTo(this.app.stage);
+    centerContainer.setPosition((this.app.canvas.width / 2) - centerContainer.getSize().width, (this.app.canvas.height / 2) - centerContainer.getSize().height);
+
+    let originalPosition = { x: 0, y: 0 };
+
+    blocks.forEach((block) => {
+      block.onDrag((dragType, event) => {
+        switch (dragType) {
+          case 'drag-start': {
+            originalPosition = { x: event.currentTarget.x, y: event.currentTarget.y };
+            event.currentTarget.parent!.toLocal(event.global, undefined, event.currentTarget.position);
+            break;
+          }
+
+          case 'dragging': {
+            event.currentTarget.parent!.toLocal(event.global, undefined, event.currentTarget.position);
+            break;
+          }
+
+          case 'drag-end': {
+            event.currentTarget.parent!.toLocal(originalPosition, event.currentTarget.parent!, event.currentTarget.position);
+            break;
+          }
+        }
+      });
+    });
   }
 }
