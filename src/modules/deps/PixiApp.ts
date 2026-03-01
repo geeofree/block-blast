@@ -1,5 +1,11 @@
 import { Application, ApplicationOptions, ContainerChild } from "pixi.js";
 
+declare global {
+  interface Window {
+    __PIXI_APP__: Application;
+  }
+}
+
 export class PixiApp {
   private app: Application;
 
@@ -8,6 +14,7 @@ export class PixiApp {
   }
 
   async init(options: Partial<ApplicationOptions>) {
+    window.__PIXI_APP__ = this.app;
     await this.app.init(options);
   }
 
