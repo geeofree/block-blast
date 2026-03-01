@@ -4,43 +4,42 @@ import { GlobalConfig } from "../deps/GlobalConfig";
 import { Tokens } from "../deps/Tokens";
 import { BaseComponent } from "./BaseComponent";
 
-type Bit = 0 | 1;
-
-type BlockData = [
-  Bit, Bit, Bit,
-  Bit, Bit, Bit,
-  Bit, Bit, Bit
-]
+type BlockData = number[]; // Must be 0 or 1
 
 export class Block extends BaseComponent {
   private data: BlockData;
+  private container: Container;
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
 
   constructor(data: BlockData) {
     super();
+
+    if (data.length < 9) {
+      throw new Error('Block data is less than 9.');
+    }
+
     this.data = data;
+    this.container = new Container();
   }
 
   render() {
-    const container = new Container();
-
     this.data.forEach((bit, index) => {
-      if (!bit) return;
+      if (bit === 0) return;
 
       const rect = new Graphics();
 
       const x = (index % 3) * this.globalConfig.blockSize;
       const y = Math.ceil((index + 1) / 3) * this.globalConfig.blockSize;
 
-      rect.roundRect(x, y, this.globalConfig.blockSize - this.globalConfig.blockGap, this.globalConfig.blockSize - this.globalConfig.blockGap, this.globalConfig.blockCornerRadius);
-      rect.fill('red');
+      const width = this.globalConfig.blockSize - this.globalConfig.blockGap;
+      const height = this.globalConfig.blockSize - this.globalConfig.blockGap;
 
-      container.addChild(rect);
+      rect.roundRect(x, y, width, height, this.globalConfig.blockCornerRadius);
+      rect.fill('blue');
 
+      this.container.addChild(rect);
     });
 
-    container.pivot.set(container.width / 2, container.height / 2);
-
-    return container;
+    return this.container;
   }
 }
