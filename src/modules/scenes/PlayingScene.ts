@@ -111,13 +111,24 @@ export class PlayingScene extends BaseScene {
       const block = new Block(PlayingScene.blockRegistry[keys[randIdx]]);
       const blockContainer = block.render();
 
-      block.drag();
-
       blockSelectionContainer.addChild(blockContainer);
 
       blockContainer.x = prevX;
 
       prevX = blockContainer.x + (this.globalConfig.blockSize * 3) + 8;
+
+      block.drag((dragType) => {
+        switch (dragType) {
+          case 'drag-down': {
+            block.setInitialPosition();
+            break;
+          }
+          case 'drag-up': {
+            block.returnToInitialPosition();
+            break;
+          }
+        }
+      });
     }
 
     blockSelectionContainer.position.set(0, this.container.height);

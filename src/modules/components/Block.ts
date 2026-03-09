@@ -9,6 +9,8 @@ type BlockData = number[]; // Must be 0 or 1
 export class Block extends DraggableComponent {
   private data: BlockData;
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
+  private initialX: number | null = null;
+  private initialY: number | null = null;
 
   constructor(data: BlockData) {
     if (data.length < 9) {
@@ -17,6 +19,18 @@ export class Block extends DraggableComponent {
 
     super();
     this.data = data;
+  }
+
+  setInitialPosition() {
+    this.initialX = this.container.x;
+    this.initialY = this.container.y;
+  }
+
+  returnToInitialPosition() {
+    if (this.initialX !== null && this.initialY !== null) {
+      this.container.x = this.initialX;
+      this.container.y = this.initialY;
+    }
   }
 
   render() {
