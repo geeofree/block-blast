@@ -5,6 +5,7 @@ import { PixiApp } from "../deps/PixiApp";
 import { container } from "../deps/Container";
 import { Tokens } from "../deps/Tokens";
 import { GlobalConfig } from "../deps/GlobalConfig";
+import { Board } from "../components/Board";
 
 type BlockTypes = 
   'O' | 'BIG_O' |
@@ -90,9 +91,10 @@ export class PlayingScene extends BaseScene {
   }
 
   getScene(): Container {
-    const blockSelectionContainer = this.buildBlockSelection();
+    this.buildBoard();
+    this.buildBlockSelection();
 
-    this.container.position.set(this.pixiApp.canvasWidth / 2, this.pixiApp.canvasHeight - blockSelectionContainer.height - 64);
+    this.container.position.set(this.pixiApp.canvasWidth / 2, this.pixiApp.canvasHeight / 2);
     this.container.pivot.set(this.container.width / 2, this.container.height / 2);
 
     return this.container;
@@ -117,7 +119,17 @@ export class PlayingScene extends BaseScene {
 
     blockSelectionContainer.position.set(0, this.container.height);
     this.container.addChild(blockSelectionContainer);
+  }
 
-    return blockSelectionContainer;
+  buildBoard() {
+    const boardContainer = new Container();
+    const board = new Board({ row: 7, col: 8 })
+
+    boardContainer.addChild(board.render());
+
+    this.container.addChild(boardContainer);
+
+    boardContainer.position.set(this.container.width / 2, this.container.height / 2);
+    boardContainer.pivot.set(boardContainer.width / 2, boardContainer.height / 2);
   }
 }
