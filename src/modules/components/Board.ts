@@ -1,4 +1,4 @@
-import { Container, Graphics } from "pixi.js";
+import { Graphics } from "pixi.js";
 import { BaseComponent } from "./BaseComponent";
 import { GlobalConfig } from "../deps/GlobalConfig";
 import { container } from "../deps/Container";
@@ -11,13 +11,11 @@ type BoardGrid = {
 
 export class Board extends BaseComponent {
   private grid: BoardGrid;
-  private container: Container;
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
 
   constructor(grid: BoardGrid) {
     super();
     this.grid = grid;
-    this.container = new Container();
   }
 
   render() {

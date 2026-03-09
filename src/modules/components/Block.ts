@@ -1,25 +1,22 @@
-import { Container, Graphics } from "pixi.js";
+import { Graphics } from "pixi.js";
 import { container } from "../deps/Container";
 import { GlobalConfig } from "../deps/GlobalConfig";
 import { Tokens } from "../deps/Tokens";
-import { BaseComponent } from "./BaseComponent";
+import { DraggableComponent } from "./DraggableComponent";
 
 type BlockData = number[]; // Must be 0 or 1
 
-export class Block extends BaseComponent {
+export class Block extends DraggableComponent {
   private data: BlockData;
-  private container: Container;
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
 
   constructor(data: BlockData) {
-    super();
-
     if (data.length < 9) {
       throw new Error('Block data is less than 9.');
     }
 
+    super();
     this.data = data;
-    this.container = new Container();
   }
 
   render() {

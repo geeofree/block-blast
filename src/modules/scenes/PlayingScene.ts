@@ -108,13 +108,16 @@ export class PlayingScene extends BaseScene {
 
     for (let i = 0; i < 3; i++) {
       const randIdx = Math.floor(Math.random() * keys.length);
-      const block = new Block(PlayingScene.blockRegistry[keys[randIdx]]).render();
+      const block = new Block(PlayingScene.blockRegistry[keys[randIdx]]);
+      const blockContainer = block.render();
 
-      blockSelectionContainer.addChild(block);
+      block.drag();
 
-      block.x = prevX;
+      blockSelectionContainer.addChild(blockContainer);
 
-      prevX = block.x + (this.globalConfig.blockSize * 3) + 8;
+      blockContainer.x = prevX;
+
+      prevX = blockContainer.x + (this.globalConfig.blockSize * 3) + 8;
     }
 
     blockSelectionContainer.position.set(0, this.container.height);

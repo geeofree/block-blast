@@ -1,4 +1,4 @@
-import { Application, ApplicationOptions, ContainerChild } from "pixi.js";
+import { Application, ApplicationOptions } from "pixi.js";
 
 declare global {
   interface Window {
@@ -22,8 +22,12 @@ export class PixiApp {
     document.getElementById(id)!.appendChild(this.app.canvas);
   }
 
-  addStageChild(containerChild: ContainerChild) {
-    this.app.stage.addChild(containerChild);
+  get screen() {
+    return this.app.screen
+  }
+
+  get stage() {
+    return this.app.stage
   }
 
   get canvasWidth() {

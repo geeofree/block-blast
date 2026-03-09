@@ -24,7 +24,7 @@ export class Game {
 
     if (root === null) {
       root = Scenes.getSceneFromGameState(this.gameState.state);
-      this.pixiApp.addStageChild(root);
+      this.pixiApp.stage.addChild(root);
     }
   }
 
