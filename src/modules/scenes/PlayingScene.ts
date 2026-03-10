@@ -94,8 +94,8 @@ export class PlayingScene extends BaseScene {
     this.buildBoard();
     this.buildBlockSelection();
 
-    this.container.position.set(this.pixiApp.canvasWidth / 2, this.pixiApp.canvasHeight / 2);
     this.container.pivot.set(this.container.width / 2, this.container.height / 2);
+    this.container.position.set(this.pixiApp.canvasWidth / 2, this.pixiApp.canvasHeight / 2);
 
     return this.container;
   }
