@@ -19,8 +19,8 @@ export class Board extends BaseComponent {
   }
 
   render() {
-    for (let col = 0; col <= this.grid.col; col++) {
-      for (let row = 0; row <= this.grid.row; row++) {
+    for (let col = 0; col < this.grid.col; col++) {
+      for (let row = 0; row < this.grid.row; row++) {
         const rect = new Graphics();
 
         const x = col * this.globalConfig.blockSize;
