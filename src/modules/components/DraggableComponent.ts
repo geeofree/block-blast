@@ -1,3 +1,4 @@
+import { FederatedPointerEvent } from "pixi.js";
 import { container } from "../deps/Container";
 import { PixiApp } from "../deps/PixiApp";
 import { Tokens } from "../deps/Tokens";
@@ -23,6 +24,8 @@ export abstract class DraggableComponent extends BaseComponent {
     this.container.cursor = 'grab';
 
     this.container.on('pointerdown', (event) => {
+      if (this.isDragging) return;
+
       this.container.cursor = 'grabbing';
       this.isDragging = true;
       this.dragOffsetX = this.container.x - event.globalX;
@@ -47,11 +50,15 @@ export abstract class DraggableComponent extends BaseComponent {
       this.container.y = y;
     });
 
-    const stopDrag = () => {
+    const stopDrag = (event: FederatedPointerEvent) => {
+      if (!this.isDragging) return;
+
       this.isDragging = false;
       this.container.cursor = 'grab';
       if (typeof cb === 'function') {
-        cb('drag-up');
+        const x = event.globalX + this.dragOffsetX;
+        const y = event.globalY + this.dragOffsetY;
+        cb('drag-up', { x, y });
       }
     }
 
