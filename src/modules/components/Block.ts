@@ -45,8 +45,9 @@ export class Block extends DraggableComponent {
       const width = this.globalConfig.blockSize - this.globalConfig.blockGap;
       const height = this.globalConfig.blockSize - this.globalConfig.blockGap;
 
-      rect.roundRect(x, y, width, height, this.globalConfig.blockCornerRadius);
+      rect.roundRect(0, 0, width, height, this.globalConfig.blockCornerRadius);
       rect.fill('blue');
+      rect.position.set(x, y);
 
       this.container.addChild(rect);
     });
