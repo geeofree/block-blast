@@ -145,7 +145,7 @@ export class PlayingScene extends BaseScene {
       });
     }
 
-    blockSelectionContainer.position.set(0, this.container.height);
+    blockSelectionContainer.position.set(0, this.container.height + 128);
     this.container.addChild(blockSelectionContainer);
   }
 
@@ -154,9 +154,6 @@ export class PlayingScene extends BaseScene {
     const boardContainer = board.render();
 
     this.container.addChild(boardContainer);
-
-    boardContainer.pivot.set(boardContainer.width / 2, boardContainer.height / 2);
-    boardContainer.position.set(this.container.width / 2, this.container.height / 2);
 
     return board;
   }
