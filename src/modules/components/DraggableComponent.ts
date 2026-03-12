@@ -1,14 +1,9 @@
-import { FederatedPointerEvent } from "pixi.js";
 import { container } from "../deps/Container";
 import { PixiApp } from "../deps/PixiApp";
 import { Tokens } from "../deps/Tokens";
 import { BaseComponent } from "./BaseComponent";
 
-type DragTypes = 'drag-down' | 'drag-move' | 'drag-up';
-type DragPosition = {
-  x: number;
-  y: number;
-}
+export type DragTypes = 'drag-down' | 'drag-move' | 'drag-up';
 
 export abstract class DraggableComponent extends BaseComponent {
   private isDragging: boolean = false;
@@ -16,7 +11,7 @@ export abstract class DraggableComponent extends BaseComponent {
   private dragOffsetX: number = 0;
   private dragOffsetY: number = 0;
 
-  drag(cb?: (dragType: DragTypes, position?: DragPosition) => void) {
+  drag(cb?: (dragType: DragTypes) => void) {
     this.pixiApp.stage.eventMode = 'static';
     this.pixiApp.stage.hitArea = this.pixiApp.screen;
 
@@ -43,22 +38,20 @@ export abstract class DraggableComponent extends BaseComponent {
       const y = event.globalY + this.dragOffsetY;
 
       if (typeof cb === 'function') {
-        cb('drag-move', { x, y });
+        cb('drag-move');
       }
 
       this.container.x = x;
       this.container.y = y;
     });
 
-    const stopDrag = (event: FederatedPointerEvent) => {
+    const stopDrag = () => {
       if (!this.isDragging) return;
 
       this.isDragging = false;
       this.container.cursor = 'grab';
       if (typeof cb === 'function') {
-        const x = event.globalX + this.dragOffsetX;
-        const y = event.globalY + this.dragOffsetY;
-        cb('drag-up', { x, y });
+        cb('drag-up');
       }
     }
 

@@ -6,6 +6,7 @@ import { container } from "../deps/Container";
 import { Tokens } from "../deps/Tokens";
 import { GlobalConfig } from "../deps/GlobalConfig";
 import { Board } from "../components/Board";
+import { BlockPosition } from "../events/BlockPosition";
 
 type BlockTypes = 
   'O' | 'BIG_O' |
@@ -18,9 +19,11 @@ type BlockTypes =
 type BlockRegistry = Record<BlockTypes, number[]>;
 
 export class PlayingScene extends BaseScene {
+  private container: Container;
+
   private pixiApp: PixiApp = container.resolve(Tokens.PixiApp);
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
-  private container: Container;
+  private blockPosition: BlockPosition = container.resolve(Tokens.BlockPosition);
 
   private static blockRegistry: BlockRegistry = {
     'O': [
@@ -91,11 +94,13 @@ export class PlayingScene extends BaseScene {
   }
 
   getScene(): Container {
-    this.buildBoard();
+    const board = this.buildBoard();
     this.buildBlockSelection();
 
     this.container.pivot.set(this.container.width / 2, this.container.height / 2);
     this.container.position.set(this.pixiApp.canvasWidth / 2, this.pixiApp.canvasHeight / 2);
+
+    board.collision();
 
     return this.container;
   }
@@ -108,7 +113,11 @@ export class PlayingScene extends BaseScene {
 
     for (let i = 0; i < 3; i++) {
       const randIdx = Math.floor(Math.random() * keys.length);
-      const block = new Block(PlayingScene.blockRegistry[keys[randIdx]]);
+
+      const blockType = keys[randIdx];
+      const blockData = PlayingScene.blockRegistry[blockType];
+
+      const block = new Block(blockData);
       const blockContainer = block.render();
 
       blockSelectionContainer.addChild(blockContainer);
@@ -123,7 +132,12 @@ export class PlayingScene extends BaseScene {
             block.setInitialPosition();
             break;
           }
+          case 'drag-move': {
+            this.blockPosition.emit({ blockContainer, dragType });
+            break;
+          }
           case 'drag-up': {
+            this.blockPosition.emit({ blockContainer, dragType });
             block.returnToInitialPosition();
             break;
           }
@@ -136,14 +150,14 @@ export class PlayingScene extends BaseScene {
   }
 
   buildBoard() {
-    const boardContainer = new Container();
     const board = new Board({ row: 7, col: 8 })
-
-    boardContainer.addChild(board.render());
+    const boardContainer = board.render();
 
     this.container.addChild(boardContainer);
 
-    boardContainer.position.set(this.container.width / 2, this.container.height / 2);
     boardContainer.pivot.set(boardContainer.width / 2, boardContainer.height / 2);
+    boardContainer.position.set(this.container.width / 2, this.container.height / 2);
+
+    return board;
   }
 }
