@@ -1,10 +1,9 @@
-import { Bounds, Graphics, Color } from "pixi.js";
+import { Bounds, Graphics } from "pixi.js";
 import { BaseComponent } from "./BaseComponent";
 import { GlobalConfig } from "../deps/GlobalConfig";
 import { container } from "../deps/Container";
 import { Tokens } from "../deps/Tokens";
-import { BlockPosition } from "../events/BlockPosition";
-import { getRandomItem } from "../utils/random";
+import { PlaceBlock } from "../events/PlaceBlock";
 import { colorRegistry } from "../utils/color";
 
 type GridParam = {
@@ -18,7 +17,7 @@ export class Board extends BaseComponent {
   private grid: Grid;
   private maxCol: number;
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
-  private blockPosition: BlockPosition = container.resolve(Tokens.BlockPosition);
+  private placeBlock: PlaceBlock = container.resolve(Tokens.PlaceBlock);
 
   constructor(grid: GridParam) {
     super();
@@ -50,8 +49,8 @@ export class Board extends BaseComponent {
     return this.container;
   }
 
-  collision() {
-    this.blockPosition.subscribe(data => {
+  placeBlockListener(cb: (trayItemIdx: number) => void) {
+    this.placeBlock.subscribe(data => {
       let placements = [];
 
       for (let boardRectIdx = 0; boardRectIdx < this.container.children.length; boardRectIdx++) {
@@ -71,15 +70,14 @@ export class Board extends BaseComponent {
       }
 
       if (placements.length < data.blockContainer.children.length) {
-        placements = [];
+        data.block.returnToInitialPosition();
+      } else {
+        placements.forEach(placementIdx => {
+          this.grid[placementIdx] = data.colorIdx;
+        });
+        this.rerender();
+        cb(data.trayItemIdx);
       }
-
-      placements.forEach(placementIdx => {
-        this.grid[placementIdx] = data.colorIdx;
-      });
-
-      this.container.removeChildren();
-      this.render();
     });
   }
 

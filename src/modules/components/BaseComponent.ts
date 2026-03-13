@@ -8,4 +8,9 @@ export abstract class BaseComponent {
   }
 
   abstract render(): Container;
+
+  rerender() {
+    this.container.removeChildren();
+    return this.render();
+  }
 }
