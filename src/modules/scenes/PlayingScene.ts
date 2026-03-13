@@ -24,9 +24,8 @@ export class PlayingScene extends BaseScene {
     this.container.pivot.set(this.container.width / 2, this.container.height / 2);
     this.container.position.set(this.pixiApp.canvasWidth / 2, this.pixiApp.canvasHeight / 2);
 
-    board.placeBlockListener((trayItemIdx) => {
-      blockTray.regenerateTray(trayItemIdx);
-    });
+    board.placeBlockListener();
+    blockTray.blockPlacedListener();
 
     return this.container;
   }

@@ -3,4 +3,5 @@ export const Tokens = {
   GameState: Symbol('GameState'),
   PixiApp: Symbol('PixiApp'),
   PlaceBlock: Symbol('PlaceBlock'),
+  BlockPlaced: Symbol('BlockPlaced'),
 }

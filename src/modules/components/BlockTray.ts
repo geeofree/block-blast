@@ -7,6 +7,7 @@ import { GlobalConfig } from '../deps/GlobalConfig';
 import { container } from '../deps/Container';
 import { Tokens } from '../deps/Tokens';
 import { PlaceBlock } from '../events/PlaceBlock';
+import { BlockPlaced } from '../events/BlockPlaced';
 
 const blockDataRegistry = [
   [
@@ -77,14 +78,13 @@ type TrayItem = {
 }
 
 export class BlockTray extends BaseComponent {
-  private maxTrayItems: number;
   private trayItems: TrayItem[];
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
   private placeBlock: PlaceBlock = container.resolve(Tokens.PlaceBlock);
+  private blockPlaced: BlockPlaced = container.resolve(Tokens.BlockPlaced);
 
   constructor(maxTrayItems: number) {
     super();
-    this.maxTrayItems = maxTrayItems;
     this.trayItems = Array(maxTrayItems).fill(0).map(() => this.getRandomBlock());
   }
 
@@ -116,12 +116,14 @@ export class BlockTray extends BaseComponent {
     return this.container;
   }
 
-  regenerateTray(trayItemIdx: number) {
-    this.trayItems = this.trayItems.map((trayItem, index) => index !== trayItemIdx ? trayItem : this.getRandomBlock());
-    this.rerender();
+  blockPlacedListener() {
+    this.blockPlaced.subscribe(({ trayItemIdx }) => {
+      this.trayItems = this.trayItems.map((trayItem, index) => index !== trayItemIdx ? trayItem : this.getRandomBlock());
+      this.rerender();
+    });
   }
 
-  private getRandomBlock() {
+  private getRandomBlock(): TrayItem {
     const randBlockIdx = getRandomItem(blockDataRegistry.length);
     const randColorIdx = getRandomItem(colorRegistry.length);
 

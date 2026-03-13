@@ -4,6 +4,7 @@ import { GlobalConfig } from "./GlobalConfig";
 import { PixiApp } from "./PixiApp";
 import { Tokens } from "./Tokens";
 import { placeBlock } from "../events/PlaceBlock";
+import { blockPlaced } from "../events/BlockPlaced";
 
 export class Dependencies {
   static registerDeps() {
@@ -12,5 +13,6 @@ export class Dependencies {
 
     container.bindValue(Tokens.GameState, gameState);
     container.bindValue(Tokens.PlaceBlock, placeBlock);
+    container.bindValue(Tokens.BlockPlaced, blockPlaced);
   }
 }

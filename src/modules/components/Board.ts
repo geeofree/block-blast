@@ -5,6 +5,7 @@ import { container } from "../deps/Container";
 import { Tokens } from "../deps/Tokens";
 import { PlaceBlock } from "../events/PlaceBlock";
 import { colorRegistry } from "../utils/color";
+import { BlockPlaced } from "../events/BlockPlaced";
 
 type GridParam = {
   row: number;
@@ -18,6 +19,7 @@ export class Board extends BaseComponent {
   private maxCol: number;
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
   private placeBlock: PlaceBlock = container.resolve(Tokens.PlaceBlock);
+  private blockPlaced: BlockPlaced = container.resolve(Tokens.BlockPlaced);
 
   constructor(grid: GridParam) {
     super();
@@ -49,7 +51,7 @@ export class Board extends BaseComponent {
     return this.container;
   }
 
-  placeBlockListener(cb: (trayItemIdx: number) => void) {
+  placeBlockListener() {
     this.placeBlock.subscribe(data => {
       let placements = [];
 
@@ -76,7 +78,7 @@ export class Board extends BaseComponent {
           this.grid[placementIdx] = data.colorIdx;
         });
         this.rerender();
-        cb(data.trayItemIdx);
+        this.blockPlaced.emit({ trayItemIdx: data.trayItemIdx });
       }
     });
   }
