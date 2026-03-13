@@ -125,7 +125,7 @@ export class BlockTray extends BaseComponent {
 
   private getRandomBlock(): TrayItem {
     const randBlockIdx = getRandomItem(blockDataRegistry.length);
-    const randColorIdx = getRandomItem(colorRegistry.length);
+    const randColorIdx = Math.max(getRandomItem(colorRegistry.length), 1);
 
     const blockData = blockDataRegistry[randBlockIdx];
     const color = colorRegistry[randColorIdx];

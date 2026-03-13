@@ -1,6 +1,7 @@
 import { Color } from "pixi.js";
 
 export const colorRegistry = [
+  new Color('#0f172a'),
   new Color('#fcd34d'),
   new Color('#6ee7b7'),
   new Color('#67e8f9'),

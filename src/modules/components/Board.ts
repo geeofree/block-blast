@@ -41,7 +41,7 @@ export class Board extends BaseComponent {
       const height = this.globalConfig.blockSize - this.globalConfig.blockGap;
 
       rect.roundRect(0, 0, width, height, this.globalConfig.blockCornerRadius);
-      const color = colorIdx > 0 ? colorRegistry[colorIdx] : '#0f172a';
+      const color = colorIdx > 0 ? colorRegistry[colorIdx] : colorRegistry[0];
       rect.fill(color);
       rect.position.set(x, y);
 
