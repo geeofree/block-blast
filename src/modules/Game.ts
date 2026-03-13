@@ -14,7 +14,7 @@ export class Game {
   private pixiApp = container.resolve<PixiApp>(Tokens.PixiApp);
 
   private async init() {
-    await this.pixiApp.init({ resizeTo: window });
+    await this.pixiApp.init({ resizeTo: window, backgroundColor: 'white' });
     this.pixiApp.attachToDOMParent(this.globalConfig.rootElement);
     this.start();
   }

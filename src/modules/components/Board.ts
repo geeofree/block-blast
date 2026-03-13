@@ -1,9 +1,11 @@
-import { Bounds, Graphics } from "pixi.js";
+import { Bounds, Graphics, Color } from "pixi.js";
 import { BaseComponent } from "./BaseComponent";
 import { GlobalConfig } from "../deps/GlobalConfig";
 import { container } from "../deps/Container";
 import { Tokens } from "../deps/Tokens";
 import { BlockPosition } from "../events/BlockPosition";
+import { getRandomItem } from "../utils/random";
+import { colorRegistry } from "../utils/color";
 
 type GridParam = {
   row: number;
@@ -25,7 +27,7 @@ export class Board extends BaseComponent {
   }
 
   render() {
-    this.grid.forEach((rectData, index) => {
+    this.grid.forEach((colorIdx, index) => {
       const rect = new Graphics();
 
       const col = index % this.maxCol;
@@ -38,7 +40,8 @@ export class Board extends BaseComponent {
       const height = this.globalConfig.blockSize - this.globalConfig.blockGap;
 
       rect.roundRect(0, 0, width, height, this.globalConfig.blockCornerRadius);
-      rect.fill(rectData ? 'red' : 'green');
+      const color = colorIdx > 0 ? colorRegistry[colorIdx] : '#0f172a';
+      rect.fill(color);
       rect.position.set(x, y);
 
       this.container.addChild(rect);
@@ -72,7 +75,7 @@ export class Board extends BaseComponent {
       }
 
       placements.forEach(placementIdx => {
-        this.grid[placementIdx] = 1;
+        this.grid[placementIdx] = data.colorIdx;
       });
 
       this.container.removeChildren();

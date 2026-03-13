@@ -1,4 +1,4 @@
-import { Graphics } from "pixi.js";
+import { Color, Graphics } from "pixi.js";
 import { container } from "../deps/Container";
 import { GlobalConfig } from "../deps/GlobalConfig";
 import { Tokens } from "../deps/Tokens";
@@ -11,13 +11,15 @@ export class Block extends DraggableComponent {
   private globalConfig: GlobalConfig = container.resolve(Tokens.GlobalConfig);
   private initialX: number | null = null;
   private initialY: number | null = null;
+  public color: Color;
 
-  constructor(data: BlockData) {
+  constructor(color: Color, data: BlockData) {
     if (data.length < 9) {
       throw new Error('Block data is less than 9.');
     }
 
     super();
+    this.color = color;
     this.data = data;
   }
 
@@ -46,7 +48,7 @@ export class Block extends DraggableComponent {
       const height = this.globalConfig.blockSize - this.globalConfig.blockGap;
 
       rect.roundRect(0, 0, width, height, this.globalConfig.blockCornerRadius);
-      rect.fill('blue');
+      rect.fill(this.color);
       rect.position.set(x, y);
 
       this.container.addChild(rect);
