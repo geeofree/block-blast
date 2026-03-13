@@ -1,5 +1,5 @@
 import { Container } from "pixi.js";
-import { GameStates } from "../deps/GameState";
+import { GameStates } from "../stateMachines/GameState";
 import { BaseScene } from "./BaseScene";
 import { MenuScene } from "./MenuScene";
 import { SettingScene } from "./SettingScene";

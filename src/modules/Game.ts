@@ -2,7 +2,7 @@ import { ContainerChild } from "pixi.js";
 import { Tokens } from "./deps/Tokens";
 import { GlobalConfig } from "./deps/GlobalConfig";
 import { container } from "./deps/Container";
-import { GameState } from "./deps/GameState";
+import { GameState } from "./stateMachines/GameState";
 import { Scenes } from "./scenes/Scenes";
 import { PixiApp } from "./deps/PixiApp";
 
